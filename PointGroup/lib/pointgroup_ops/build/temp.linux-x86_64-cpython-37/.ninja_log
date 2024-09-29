@@ -1,0 +1,4 @@
+# ninja log v5
+1	14309	1692169955999719871	/home/ubuntu/Code/Manipulation/Bin_Picking/PointGroup/lib/pointgroup_ops/build/temp.linux-x86_64-cpython-37/src/cuda.o	6abcb8895187cbb0
+1	16762	1692169958451683529	/home/ubuntu/Code/Manipulation/Bin_Picking/PointGroup/lib/pointgroup_ops/build/temp.linux-x86_64-cpython-37/src/pointgroup_ops.o	b0cbf19c55a2fe9c
+1	18802	1692169960491653287	/home/ubuntu/Code/Manipulation/Bin_Picking/PointGroup/lib/pointgroup_ops/build/temp.linux-x86_64-cpython-37/src/pointgroup_ops_api.o	dc264d7cd644b2b7

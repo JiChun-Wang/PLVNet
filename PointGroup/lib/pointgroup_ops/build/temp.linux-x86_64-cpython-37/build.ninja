@@ -1,0 +1,30 @@
+ninja_required_version = 1.3
+cxx = c++
+nvcc = /usr/local/cuda/bin/nvcc
+
+cflags = -pthread -B /home/ubuntu/.conda/envs/grasp_env/compiler_compat -Wl,--sysroot=/ -Wsign-compare -DNDEBUG -g -fwrapv -O3 -Wall -Wstrict-prototypes -fPIC -I/home/ubuntu/.conda/envs/grasp_env/lib/python3.7/site-packages/torch/include -I/home/ubuntu/.conda/envs/grasp_env/lib/python3.7/site-packages/torch/include/torch/csrc/api/include -I/home/ubuntu/.conda/envs/grasp_env/lib/python3.7/site-packages/torch/include/TH -I/home/ubuntu/.conda/envs/grasp_env/lib/python3.7/site-packages/torch/include/THC -I/usr/local/cuda/include -I/home/ubuntu/.conda/envs/grasp_env/include/python3.7m -c
+post_cflags = -g -DTORCH_API_INCLUDE_EXTENSION_H '-DPYBIND11_COMPILER_TYPE="_gcc"' '-DPYBIND11_STDLIB="_libstdcpp"' '-DPYBIND11_BUILD_ABI="_cxxabi1011"' -DTORCH_EXTENSION_NAME=PG_OP -D_GLIBCXX_USE_CXX11_ABI=0 -std=c++14
+cuda_cflags = -I/home/ubuntu/.conda/envs/grasp_env/lib/python3.7/site-packages/torch/include -I/home/ubuntu/.conda/envs/grasp_env/lib/python3.7/site-packages/torch/include/torch/csrc/api/include -I/home/ubuntu/.conda/envs/grasp_env/lib/python3.7/site-packages/torch/include/TH -I/home/ubuntu/.conda/envs/grasp_env/lib/python3.7/site-packages/torch/include/THC -I/usr/local/cuda/include -I/home/ubuntu/.conda/envs/grasp_env/include/python3.7m -c
+cuda_post_cflags = -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_BFLOAT16_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ --expt-relaxed-constexpr --compiler-options ''"'"'-fPIC'"'"'' -O2 -DTORCH_API_INCLUDE_EXTENSION_H '-DPYBIND11_COMPILER_TYPE="_gcc"' '-DPYBIND11_STDLIB="_libstdcpp"' '-DPYBIND11_BUILD_ABI="_cxxabi1011"' -DTORCH_EXTENSION_NAME=PG_OP -D_GLIBCXX_USE_CXX11_ABI=0 -gencode=arch=compute_86,code=compute_86 -gencode=arch=compute_86,code=sm_86 -std=c++14
+ldflags = 
+
+rule compile
+  command = $cxx -MMD -MF $out.d $cflags -c $in -o $out $post_cflags
+  depfile = $out.d
+  deps = gcc
+
+rule cuda_compile
+  depfile = $out.d
+  deps = gcc
+  command = $nvcc  $cuda_cflags -c $in -o $out $cuda_post_cflags
+
+
+
+build /home/ubuntu/Code/Manipulation/Bin_Picking/PointGroup/lib/pointgroup_ops/build/temp.linux-x86_64-cpython-37/src/cuda.o: cuda_compile /home/ubuntu/Code/Manipulation/Bin_Picking/PointGroup/lib/pointgroup_ops/src/cuda.cu
+build /home/ubuntu/Code/Manipulation/Bin_Picking/PointGroup/lib/pointgroup_ops/build/temp.linux-x86_64-cpython-37/src/pointgroup_ops.o: compile /home/ubuntu/Code/Manipulation/Bin_Picking/PointGroup/lib/pointgroup_ops/src/pointgroup_ops.cpp
+build /home/ubuntu/Code/Manipulation/Bin_Picking/PointGroup/lib/pointgroup_ops/build/temp.linux-x86_64-cpython-37/src/pointgroup_ops_api.o: compile /home/ubuntu/Code/Manipulation/Bin_Picking/PointGroup/lib/pointgroup_ops/src/pointgroup_ops_api.cpp
+
+
+
+
+

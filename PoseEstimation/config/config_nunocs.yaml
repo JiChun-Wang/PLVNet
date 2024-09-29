@@ -1,0 +1,29 @@
+DATA:
+  manual_seed: 123
+  data_root: /home/ubuntu/Code/Manipulation/Bin_Picking/data
+  dataset: CatBP_Dataset
+  obj_name: nunocs
+
+  batch_size: 64
+  num_pts: 1024
+
+  num_train: 100000
+  num_val: 2000
+
+TRAIN:
+  epochs: 60
+  n_workers: 16 # data loader workers
+  optim: Adam # Adam or SGD
+  lr: 0.001
+  lr_milestones: [30]
+  lr_factor: 0.1
+  momentum: 0.9
+  weight_decay: 0.0000001
+  save_freq: 5  # also eval_freq
+
+  pretrain_path:
+  pretrain_module: []
+  fix_module: []
+
+NUNOCS:
+  ce_loss_bins: 32

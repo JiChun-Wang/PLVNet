@@ -1,0 +1,57 @@
+DATA:
+  manual_seed: 123
+  data_root: /home/ubuntu/Code/Manipulation/Bin_Picking/data
+  dataset: IPA_Dataset
+  obj_name: IPARingScrew
+  sym_type: 1  # symmetry type (0: revolution, 1: Cyclic, 2: No proper symmetry)
+
+  input_channel: 6
+  batch_size: 128
+  num_pts: 1024
+
+  num_train: 80000
+  num_val: 2000
+
+STRUCTURE:
+  gcn_sup_num: 7
+  gcn_n_num: 10
+
+  feat_vote: 768
+
+  feat_c_R: 1280 # (GCN: 1280, PointNet++: 960)
+  R_c: 3
+  feat_c_t: 1219 # (GCN: 3 or 1280, PointNet++: 3 or 960)
+  t_c: 3
+
+LOSSES:
+  pose_loss_type: l1 # l1 or smoothl1
+  rot_1_w: 10
+  rot_2_w: 10
+  rot_regular_w: 0.5
+  tran_w: 1
+  size_w: 1
+
+  vote_line_w: 10
+  vote_plane_w: 10
+  vote_line_con_w: 10
+  vote_plane_con_w: 10
+
+TRAIN:
+  epochs: 50
+  n_workers: 16 # data loader workers
+  optim: Adam # Adam or SGD
+  lr: 0.0001
+  lr_milestones: [25]
+  lr_factor: 0.1
+  momentum: 0.9
+  weight_decay: 0.0000001
+  save_freq: 5  # also eval_freq
+
+  pretrain_path:
+  pretrain_module: []
+  fix_module: []
+
+TEST:
+  ds_size: 0.001
+  save_semantic: True
+  save_instance: True
