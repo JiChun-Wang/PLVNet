@@ -1,5 +1,3 @@
-__pycache__/
-.idea/
 /大论文
 /data
 /Data_Synthesis/video.mp4
@@ -25,3 +23,5 @@ __pycache__/
 /viewpoint.json
 /win2_main.py
 /win_main.py
+__pycache__/
+.idea/
